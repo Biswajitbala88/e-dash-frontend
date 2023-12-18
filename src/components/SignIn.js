@@ -27,7 +27,9 @@ const SignUp = ()=>{
           });
           result = await result.json();
           console.log(result);
-          if(result){
+          if(result.result === 1){
+            alert('Enter valid data');
+          }else{
             localStorage.setItem('user', JSON.stringify(result));
             navigate('/');
           }

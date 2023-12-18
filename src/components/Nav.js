@@ -13,7 +13,9 @@ const Nav = ()=>{
     return(
         <nav className="bg-gray-800 p-4 ">
             <ul className="flex justify-between items-center text-white">
-                
+                <li className="mr-3">
+                    <img src="logo_1.png" className="w-14" alt=""/>
+                </li>
                 {auth?
                 (<>
                 <li className="mr-3">
@@ -31,7 +33,7 @@ const Nav = ()=>{
                 <li className="mr-3">
                 
                 </li>
-                <li><Link onClick={logOut} to="/SignIn" className="hover:text-yellow-300">Logout</Link></li>
+                <li>( {JSON.parse(auth).name} )- <Link onClick={logOut} to="/SignIn" className="hover:text-yellow-300">Logout</Link></li>
                 </>)
                 :(<>
                 <li><Link to="/SignIn" className="hover:text-yellow-300">Sign In</Link></li>
