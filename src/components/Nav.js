@@ -10,6 +10,7 @@ const Nav = ()=>{
         localStorage.clear();
         navigate('./SignIn');
     }
+    
     return(
         <nav className="bg-gray-800 p-4 ">
             <ul className="flex justify-between items-center text-white">
