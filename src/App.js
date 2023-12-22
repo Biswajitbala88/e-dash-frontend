@@ -15,8 +15,8 @@ function App() {
         <Nav />
         <Routes>
           <Route element={<PrivateComponent />}>
-            <Route path='/' element={<AddProduct />} />
-            <Route path='/add_product' element={<h1>This is add product page</h1>} />
+            <Route path='/' element={<h1>This product list page</h1>} />
+            <Route path='/add_product' element={<AddProduct />} />
             <Route path='/categories' element={<h1>This categories page</h1>} />
             <Route path='/profile' element={<h1>This is profile page</h1>} />
             <Route path='/logout' element={<h1>This is logout page</h1>} />

@@ -5,20 +5,22 @@ const AddProduct = ()=>{
     const [name, setName] = useState("");
     const [price, setPrice] = useState("");
     const [category, setCategory] = useState("");
-    // const [userId, setUserId] = useState("");
     const [company, setCompany] = useState("");
+    const [error, setError] = React.useState(false);
+
+
     const navigate = useNavigate();
 
-    // useEffect(()=>{
-    //   const auth = localStorage.getItem('user');
-    //   if(auth){
-    //     navigate('/');
-    //   }
-    // });
-
-
     const collectData = async ()=>{
-      const userId = JSON.parse(localStorage.getItem('user'))._id;;
+
+      if(!name || !price || !category || !company){
+        setError(true);
+        return false;
+      }
+
+
+
+      const userId = JSON.parse(localStorage.getItem('user'))._id;
       // console.log(userId);
 
         let result = await fetch("http://localhost:1200/add-product",{
@@ -55,6 +57,7 @@ const AddProduct = ()=>{
             onChange={(e)=>setName(e.target.value)}
             className="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:border-blue-500"
             />
+            {error && !name && <p className="text-red-500 text-xs mt-1">Enter valid name</p>}
           </div>
 
           <div className="mb-4">
@@ -67,6 +70,8 @@ const AddProduct = ()=>{
               onChange={(e)=>setPrice(e.target.value)}
               className="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:border-blue-500"
             />
+            {error && !price && <p className="text-red-500 text-xs mt-1">Enter valid Price</p>}
+
           </div>
 
           <div className="mb-6">
@@ -80,6 +85,8 @@ const AddProduct = ()=>{
               required
               className="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:border-blue-500"
             />
+            {error && !category && <p className="text-red-500 text-xs mt-1">Enter valid Category</p>}
+
           </div>
 
           <div className="mb-6">
@@ -93,6 +100,8 @@ const AddProduct = ()=>{
               required
               className="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:border-blue-500"
             />
+            {error && !company && <p className="text-red-500 text-xs mt-1">Enter valid Company</p>}
+
           </div>
 
           <button type="button" onClick={collectData} className="w-full bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">
