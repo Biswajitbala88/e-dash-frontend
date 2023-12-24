@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import {useNavigate} from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import {useNavigate, useParams} from "react-router-dom";
 
 const UpdateProduct = ()=>{
     const [name, setName] = useState("");
@@ -7,9 +7,33 @@ const UpdateProduct = ()=>{
     const [category, setCategory] = useState("");
     const [company, setCompany] = useState("");
     const [error, setError] = React.useState(false);
-
-
+    const { id } = useParams();
     const navigate = useNavigate();
+
+
+    useEffect(() => {
+      const fetchProductDetails = async () => {
+        try {
+          const response = await fetch(`http://localhost:1200/productDetails/${id}`);
+          const data = await response.json();
+  
+          if (data.length > 0) {
+            const product = data[0];
+            setName(product.name);
+            setPrice(product.price);
+            setCategory(product.category);
+            setCompany(product.company);
+          } else {
+            // Handle case where product details are not found
+            console.log("Product details not found");
+          }
+        } catch (error) {
+          console.error("Error fetching product details:", error);
+        }
+      };
+  
+      fetchProductDetails();
+    }, [id]);
 
     const collectData = async ()=>{
 
@@ -21,22 +45,22 @@ const UpdateProduct = ()=>{
 
 
       const userId = JSON.parse(localStorage.getItem('user'))._id;
-      // console.log(userId);
-
-        let result = await fetch("http://localhost:1200/add-product",{
-          method: "post",
-          body: JSON.stringify({name, price, category, userId, company}),
+      try {
+        const result = await fetch(`http://localhost:1200/update-product/${id}`, {
+          method: "put",
+          body: JSON.stringify({ name, price, category, company }),
           headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json",
           },
         });
-        result = await result.json();
-        console.log({name, price, category, userId, company});
-        // localStorage.setItem('user', JSON.stringify(result));
-        if(result){
+        const updatedProduct = await result.json();
+        if (updatedProduct) {
           navigate('/');
         }
-
+      } catch (error) {
+        console.error("Error updating product:", error);
+      }
+      
     }
 
     
