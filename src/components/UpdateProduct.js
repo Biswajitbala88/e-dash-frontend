@@ -41,9 +41,6 @@ const UpdateProduct = ()=>{
         setError(true);
         return false;
       }
-
-
-
       const userId = JSON.parse(localStorage.getItem('user'))._id;
       try {
         const result = await fetch(`http://localhost:1200/update-product/${id}`, {
